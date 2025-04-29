@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>مولّد صفحات السكربتات</title>
+  <style>
+    body { background-color: #000; color: #ff0033; font-family: monospace; padding: 20px; }
+    input, textarea {
+      width: 100%; margin-bottom: 10px; padding: 10px;
+      background: #111; color: #ff0033; border: 1px solid #ff0033;
+    }
+    button {
+      background: #ff0033; color: white; border: none;
+      padding: 10px 20px; cursor: pointer;
+    }
+    .output { margin-top: 20px; white-space: pre-wrap; background: #111; padding: 15px; }
+    footer { margin-top: 40px; font-size: 0.8em; color: #777; text-align: center; }
+  </style>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-page="generator">
+  <h1>مولّد صفحات السكربتات</h1>
+  <input type="text" id="title" placeholder="عنوان السكربت">
+  <input type="text" id="desc" placeholder="وصف السكربت">
+  <textarea id="code" rows="10" placeholder="ألصق السكربت هنا..."></textarea>
+  <button onclick="generate()">أنشئ الصفحة</button>
+  <button onclick="sendToTelegram()">أرسل لتليجرام</button>
+  <div class="output" id="output"></div>
+  <footer>تم الإنشاء تلقائيًا بواسطة المِزّة - عبدالعزيز | الأمن السيبراني</footer>
+
+  
+    <script src="../scripts/main.js"></script>
+</body>
+</html>
+

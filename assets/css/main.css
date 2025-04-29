@@ -1,0 +1,14 @@
+
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+/* Page-specific backgrounds */
+body[data-page="assistantcodes"] { background-image: url('../assets/images/logo_icon.png'); }
+body[data-page="chat2"]        { background-image: url('../assets/images/bot_genie2.webp'); }
+body[data-page="chat3"]        { background-image: url('../assets/images/bot_genie5.webp'); }
+body[data-page="codesfile"]    { background-image: url('../assets/images/bg_template.webp'); }
+/* add more pages backgrounds as needed */

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دردشة متقدمة | CyberAI OS</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #e60000;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .chat-container {
+      display: flex;
+      height: calc(100vh - 120px);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .chat-sidebar {
+      width: 250px;
+      background-color: #1a1a1a;
+      border-left: 1px solid #800000;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #0d0d0d;
+    }
+    
+    .chat-header {
+      padding: 15px;
+      background-color: #1a1a1a;
+      border-bottom: 1px solid #800000;
+      display: flex;
+      align-items: center;
+    }
+    
+    .chat-header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+    
+    .chat-header-info h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+    
+    .chat-header-info p {
+      margin: 5px 0 0 0;
+      font-size: 0.8em;
+      color: #999;
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .message {
+      display: flex;
+      margin-bottom: 15px;
+      max-width: 80%;
+    }
+    
+    .user-message {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    
+    .bot-message {
+      align-self: flex-start;
+    }
+    
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+    
+    .message-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .message-content {
+      background-color: #1a1a1a;
+      padding: 10px 15px;
+      border-radius: 10px;
+      position: relative;
+    }
+    
+    .user-message .message-content {
+      background-color: #800000;
+      color: white;
+    }
+    
+    .message-sender {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 0.9em;
+    }
+    
+    .message-text {
+      line-height: 1.4;
+    }
+    
+    .message-time {
+      font-size: 0.7em;
+      color: #999;
+      text-align: left;
+      margin-top: 5px;
+    }
+    
+    .user-message .message-time {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .chat-input {
+      padding: 15px;
+      background-color: #1a1a1a;
+      border-top: 1px solid #800000;
+      display: flex;
+      align-items: center;
+    }
+    
+    .chat-input input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #800000;
+      border-radius: 25px;
+      background-color: #0d0d0d;
+      color: #e60000;
+      font-size: 1em;
+    }
+    
+    .chat-input button {
+      background-color: #e60000;
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .chat-input button svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .chat-options {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    
+    .chat-options select {
+      flex: 1;
+      padding: 10px;
+      background-color: #0d0d0d;
+      color: #e60000;
+      border: 1px solid #800000;
+      border-radius: 5px;
+    }
+    
+    .chat-history {
+      flex: 1;
+      overflow-y: auto;
+    }
+    
+    .chat-history-item {
+      padding: 10px;
+      border-bottom: 1px solid #333;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .chat-history-item:hover {
+      background-color: #2a2a2a;
+    }
+    
+    .chat-history-item h4 {
+      margin: 0;
+      font-size: 1em;
+    }
+    
+    .chat-history-item p {
+      margin: 5px 0 0 0;
+      font-size: 0.8em;
+      color: #999;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .new-chat-btn {
+      background-color: #e60000;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      background-color: #999;
+      border-radius: 50%;
+      display: inline-block;
+      animation: typing 1s infinite ease-in-out;
+    }
+    
+    .typing-indicator span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    
+    @keyframes typing {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .chat-container {
+        flex-direction: column;
+      }
+      
+      .chat-sidebar {
+        width: 100%;
+        height: auto;
+        border-left: none;
+        border-bottom: 1px solid #800000;
+      }
+      
+      .message {
+        max-width: 90%;
+      }
+    }
+  </style>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-page="chat3">
+  <header>
+    <img src="../images/logo_icon.png" alt="Logo" width="80">
+    <h1>دردشة متقدمة</h1>
+    <p>تفاعل مع بوتات الذكاء الاصطناعي المتقدمة</p>
+  </header>
+
+  <nav>
+    <a href="../index.html">الرئيسية</a>
+    <a href="../dashboard.html">لوحة التحكم</a>
+    <a href="بوتات.html">بوتات الذكاء</a>
+    <a href="دردشة-GPT.html">دردشة GPT</a>
+    <a href="دردشة-متقدمة.html" class="active">دردشة متقدمة</a>
+    <a href="مساعد-أكواد.html">مساعد أكواد</a>
+    <a href="تصاميم.html">تصاميم</a>
+    <a href="نشر-مشاريع.html">نشر مشاريع</a>
+    <a href="المنتدى.html">المنتدى</a>
+    <a href="التوثيق.html">التوثيق</a>
+    <a href="اتصل-بنا.html">اتصل بنا</a>
+  </nav>
+
+  <div class="chat-container">
+    <div class="chat-sidebar">
+      <button class="new-chat-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 5V19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        محادثة جديدة
+      </button>
+      
+      <div class="chat-options">
+        <select id="bot-selector">
+          <option value="Gemini Flash">Gemini Flash</option>
+          <option value="Gemini Pro">Gemini Pro</option>
+          <option value="Astra AI">Astra AI</option>
+          <option value="xAI Falcon">xAI Falcon</option>
+          <option value="xAI Titan">xAI Titan</option>
+        </select>
+      </div>
+      
+      <div class="chat-history">
+        <div class="chat-history-item">
+          <h4>محادثة عن الذكاء الاصطناعي</h4>
+          <p>آخر رسالة: ما هي تطبيقات الذكاء الاصطناعي في الطب؟</p>
+        </div>
+        <div class="chat-history-item">
+          <h4>مساعدة في البرمجة</h4>
+          <p>آخر رسالة: كيف يمكنني إنشاء واجهة مستخدم تفاعلية؟</p>
+        </div>
+        <div class="chat-history-item">
+          <h4>أفكار لمشروع تخرج</h4>
+          <p>آخر رسالة: اقترح علي أفكار لمشروع تخرج في مجال الأمن السيبراني</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-main">
+      <div class="chat-header">
+        <img src="../images/bot_genie2.webp" alt="Bot">
+        <div class="chat-header-info">
+          <h3>Gemini Flash</h3>
+          <p>متصل الآن</p>
+        </div>
+      </div>
+      
+      <div class="chat-messages" id="chat-container">
+        <div class="message bot-message">
+          <div class="message-avatar">
+            <img src="../images/bot_genie2.webp" alt="Bot">
+          </div>
+          <div class="message-content">
+            <div class="message-sender">Gemini Flash</div>
+            <div class="message-text">مرحباً! أنا Gemini Flash، مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟</div>
+            <div class="message-time">10:30</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chat-input">
+        <input type="text" id="user-input" placeholder="اكتب رسالتك هنا...">
+        <button id="send-button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/chat.js"></script>
+    <script src="../scripts/main.js"></script>
+</body>
+</html>
+

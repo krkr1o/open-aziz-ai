@@ -1,0 +1,449 @@
+&lt;!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نشر المشاريع المتقدم | CyberAI OS</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    :root {
+      --color-background: #0d0d0d;
+      --color-foreground: #e60000;
+      --color-primary: #ff1a1a;
+      --color-secondary: #800000;
+      --color-accent: #ff4d4d;
+      --color-border: #333333;
+      --color-card: #1a1a1a;
+      --color-sidebar: #1a1a1a;
+      --color-header: #1a1a1a;
+    }
+
+    body.theme-light {
+      --color-background: #f8f8f8;
+      --color-foreground: #222222;
+      --color-primary: #e60000;
+      --color-secondary: #800000;
+      --color-accent: #ff4d4d;
+      --color-border: #dddddd;
+      --color-card: #ffffff;
+      --color-sidebar: #ffffff;
+      --color-header: #ffffff;
+    }
+
+    body {
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+    }
+
+    header, footer {
+      background-color: var(--color-header);
+      border-bottom-color: var(--color-primary);
+    }
+
+    nav {
+      background-color: var(--color-header);
+      border-bottom-color: var(--color-secondary);
+    }
+
+    nav a {
+      color: var(--color-primary);
+    }
+
+    nav a:hover {
+      color: var(--color-accent);
+    }
+
+    .projects-container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .projects-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn:hover {
+      background-color: var(--color-accent);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-secondary);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background-color: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .project-header {
+      padding: 15px;
+      background-color: var(--color-secondary);
+      color: white;
+    }
+
+    .project-header h3 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    .project-content {
+      padding: 15px;
+    }
+
+    .project-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 0.9em;
+      color: #999;
+    }
+
+    .project-files {
+      margin-bottom: 15px;
+    }
+
+    .project-file {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .project-file:last-child {
+      border-bottom: none;
+    }
+
+    .project-file-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .project-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: var(--color-card);
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .modal-header h2 {
+      margin: 0;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--color-foreground);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+      border: 1px solid var(--color-border);
+      border-radius: 5px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .deployment-list {
+      margin-top: 15px;
+    }
+
+    .deployment-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: var(--color-background);
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .deployment-url {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    .deployment-url:hover {
+      text-decoration: underline;
+    }
+
+    .deployment-date {
+      font-size: 0.9em;
+      color: #999;
+    }
+
+    .file-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 50px 0;
+      color: #999;
+    }
+
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 20px;
+      color: var(--color-secondary);
+    }
+
+    .empty-state h3 {
+      margin-bottom: 10px;
+      color: var(--color-foreground);
+    }
+
+    @media (max-width: 768px) {
+      .projects-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+
+      .projects-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-page="projects">
+  <header>
+    <img src="../images/logo_icon.png" alt="Logo" width="80">
+    <h1>نشر المشاريع المتقدم</h1>
+    <p>إنشاء وإدارة ونشر مشاريعك بسهولة</p>
+  </header>
+
+  <nav>
+    <a href="../index.html">الرئيسية</a>
+    <a href="../dashboard.html">لوحة التحكم</a>
+    <a href="بوتات.html">بوتات الذكاء</a>
+    <a href="دردشة-GPT.html">دردشة GPT</a>
+    <a href="دردشة-متقدمة.html">دردشة متقدمة</a>
+    <a href="مساعد-أكواد.html">مساعد أكواد</a>
+    <a href="ملعب-الأكواد.html">ملعب الأكواد</a>
+    <a href="تصاميم.html">تصاميم</a>
+    <a href="نشر-مشاريع-متقدم.html" class="active">نشر مشاريع</a>
+    <a href="المنتدى.html">المنتدى</a>
+    <a href="التوثيق.html">التوثيق</a>
+    <a href="اتصل-بنا.html">اتصل بنا</a>
+  </nav>
+
+  <div class="projects-container">
+    <div class="projects-header">
+      <h2>مشاريعي</h2>
+      <div class="projects-actions">
+        <button class="btn" id="new-project-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          مشروع جديد
+        </button>
+        <button class="btn btn-outline" id="import-project-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          استيراد مشروع
+        </button>
+        <input type="file" id="import-file-input" accept=".json" style="display: none;">
+      </div>
+    </div>
+
+    <div class="projects-grid" id="projects-grid">
+      &lt;!-- Projects will be loaded here -->
+      <div class="empty-state" id="empty-state">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>لا توجد مشاريع</h3>
+        <p>قم بإنشاء مشروع جديد أو استيراد مشروع للبدء</p>
+      </div>
+    </div>
+  </div>
+
+  &lt;!-- New Project Modal -->
+  <div class="modal" id="new-project-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>مشروع جديد</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="new-project-form">
+        <div class="form-group">
+          <label for="project-name">اسم المشروع</label>
+          <input type="text" id="project-name" required>
+        </div>
+        <div class="form-group">
+          <label for="project-template">القالب</label>
+          <select id="project-template">
+            <option value="web">مشروع ويب</option>
+            <option value="react">مشروع React</option>
+            <option value="node">مشروع Node.js</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline modal-cancel">إلغاء</button>
+          <button type="submit" class="btn">إنشاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  &lt;!-- Project Details Modal -->
+  <div class="modal" id="project-details-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="project-details-title">تفاصيل المشروع</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div id="project-details-content">
+        <div class="project-meta">
+          <div>تاريخ الإنشاء: <span id="project-created-at"></span></div>
+          <div>آخر تحديث: <span id="project-updated-at"></span></div>
+        </div>
+        <h3>الملفات</h3>
+        <div id="project-files-list" class="project-files"></div>
+        <h3>النشر</h3>
+        <div id="project-deployments" class="deployment-list">
+          <div class="empty-state">
+            <p>لم يتم نشر هذا المشروع بعد</p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="edit-project-btn">تعديل</button>
+          <button type="button" class="btn btn-secondary" id="export-project-btn">تصدير</button>
+          <button type="button" class="btn" id="deploy-project-btn">نشر</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>تابع عبدالعزيز:</p>
+    <p>
+      <a href="https://www.snapchat.com/add/bx90_9" target="_blank">Snapchat</a> |
+      <a href="https://www.instagram.com/3zooo6" target="_blank">Instagram</a> |
+      <a href="mailto:abdulzizsaleme@gmail.com">Email</a>
+    </p>
+    <p>© 2025 عبدالعزيز - جميع الحقوق محفوظة</p>
+  </footer>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/secure-api.js"></script>
+  <script src="../js/secure-config.js"></script>
+  <script src="../js/database.js"></script>
+  <script src="../js/theme-manager.js"></script>
+  <script src="../js/project-manager.js"></script>
+  
+    <script src="../scripts/main.js"></script>
+</body>
+</html>
+
