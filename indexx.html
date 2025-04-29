@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة عبدالعزيز للذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f0;
+            --primary-dark: #00b300;
+            --secondary-color: #111;
+            --text-color: #fff;
+            --dark-bg: #000;
+            --card-bg: #111;
+            --card-border: #222;
+            --input-bg: #222;
+            --success: #0f0;
+            --warning: #ff0;
+            --danger: #f00;
+            --info: #0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Animation */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 6rem 1rem 2rem;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            min-height: calc(100vh - 8rem);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.5rem;
+            background-color: var(--primary-color);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Chat Page */
+        .chat-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            height: calc(100vh - 8rem);
+        }
+
+        .chat-sidebar {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 1rem;
+        }
+
+        .bot-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .bot-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .bot-item:hover, .bot-item.active {
+            background-color: rgba(0, 255, 0, 0.1);
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .bot-info {
+            flex: 1;
+        }
+
+        .bot-name {
+            font-weight: 500;
+        }
+
+        .bot-role {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            max-width: 80%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background-color: var(--info);
+        }
+
+        .message-content {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .message.user .message-content {
+            background-color: rgba(0, 255, 0, 0.1);
+        }
+
+        .message-text {
+            margin-bottom: 0.5rem;
+        }
+
+        .message-time {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: right;
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .chat-input-field {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .chat-input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Code Generator */
+        .code-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .code-editor {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-title {
+            font-weight: 500;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .code-action {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .code-action:hover {
+            color: var(--primary-color);
+        }
+
+        .code-content {
+            flex: 1;
+            padding: 1rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .code-textarea {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            background-color: transparent;
+            color: var(--text-color);
+            border: none;
+            resize: none;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        .code-textarea:focus {
+            outline: none;
+        }
+
+        .code-output {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .output-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+
+        /* Projects Page */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--input-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            background-color: rgba(0, 255, 0, 0.1);
+            color: var(--primary-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* About Page */
+        .about-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-features {
+            margin: 2rem 0;
+        }
+
+        .about-feature {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-feature-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .developer-info {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .developer-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .developer-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .developer-detail {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .developer-detail i {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--card-border);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Utilities */
+        .text-primary {
+            color: var(--primary-color);
+        }
+
+        .mb-1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .chat-container {
+                grid-template-columns: 1fr;
+            }
+
+            .code-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+        }
+
+        /* Anonymous Logo Animation */
+        .anonymous-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .anonymous-logo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .anonymous-logo path {
+            fill: var(--primary-color);
+            stroke: var(--primary-color);
+            stroke-width: 1;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 3s linear forwards;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* Moving Top Bar */
+        .moving-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            width: 100%;
+            z-index: 1001;
+            animation: moveBar 3s linear infinite;
+        }
+
+        @keyframes moveBar {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Matrix Rain Effect */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+    </style>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-page="indexx">
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-canvas"></canvas>
+    
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Moving Top Bar -->
+    <div class="moving-bar"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Abdulaziz-AI</span>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-link" data-page="home">الرئيسية</a>
+                <a href="#" class="nav-link" data-page="chat">الذكاء الاصطناعي</a>
+                <a href="#" class="nav-link" data-page="projects">المشاريع</a>
+                <a href="#" class="nav-link" data-page="about">حول المنصة</a>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" id="login-btn">تسجيل الدخول</button>
+                <button class="btn btn-primary" id="signup-btn">إنشاء حساب</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Home Page -->
+        <div class="page active" id="home-page">
+            <section class="hero">
+                <div class="anonymous-logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 10 C25 10, 10 30, 10 50 C10 75, 25 90, 50 90 C75 90, 90 75, 90 50 C90 30, 75 10, 50 10 Z M50 20 C65 20, 80 35, 80 50 C80 65, 65 80, 50 80 C35 80, 20 65, 20 50 C20 35, 35 20, 50 20 Z M30 40 C35 40, 35 60, 30 60 Z M70 40 C65 40, 65 60, 70 60 Z M30 70 C50 80, 70 70, 70 70 Z" />
+                    </svg>
+                </div>
+                <h1>منصة عبدالعزيز للذكاء الاصطناعي</h1>
+                <p>منصة متكاملة لتوليد الشفرات البرمجية وتطبيقات الذكاء الاصطناعي بكفاءة عالية</p>
+                <div class="typing-text">
+                    <span id="typed-text"></span>
+                    <span class="cursor"></span>
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="start-now">ابدأ الآن</button>
+                    <button class="btn btn-outline" id="learn-more">تعرف على المزيد</button>
+                </div>
+            </section>
+            
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">بوتات ذكية</h3>
+                    <p>خمسة بوتات متخصصة لمساعدتك في توليد الشفرات البرمجية وإدارة المشاريع وتأمين البيانات.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="feature-title">توليد الشفرات</h3>
+                    <p>توليد شفرات برمجية بلغات متعددة مثل HTML و CSS و JavaScript و Python وغيرها.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">حماية متكاملة</h3>
+                    <p>نظام حماية متعدد الطبقات لضمان أمان بياناتك ومشاريعك من أي تهديدات.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="feature-title">إدارة المشاريع</h3>
+                    <p>أدوات متكاملة لإدارة مشاريعك البرمجية ومتابعة تقدمها وتحسين أدائها.</p>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Chat & Code Generator Page -->
+        <div class="page" id="chat-page">
+            <h2 class="text-primary mb-2">الذكاء الاصطناعي وتوليد الشفرات</h2>
+            
+            <div class="chat-container">
+                <div class="chat-sidebar">
+                    <div class="chat-header">
+                        <h3>البوتات المتاحة</h3>
+                    </div>
+                    <div class="bot-list">
+                        <div class="bot-item active" data-bot="general">
+                            <div class="bot-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bot-info">
+                                <div class="bot-name">العميد</div>
+                                <div class="bot-role">المدير العام</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bot-item" data-bot="security">
+                            <div class="bot-avatar">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="bot-info">
+                                <div class="bot-name">اللواء</div>
+                                <div class="bot-role">الأمني</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bot-item" data-bot="detective">
+                            <div class="bot-avatar">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="bot-info">
+                                <div class="bot-name">المحقق كونان</div>
+                                <div class="bot-role">مراقبة المستخدمين</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bot-item" data-bot="keys">
+                            <div class="bot-avatar">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="bot-info">
+                                <div class="bot-name">بوت توليد المفاتيح</div>
+                                <div class="bot-role">توليد مفاتيح API</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bot-item" data-bot="encryption">
+                            <div class="bot-avatar">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="bot-info">
+                                <div class="bot-name">بوت التشفير</div>
+                                <div class="bot-role">تشفير البيانات</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-main">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-text">مرحباً بك في منصة عبدالعزيز للذكاء الاصطناعي! أنا العميد، المدير العام للمنصة. كيف يمكنني مساعدتك اليوم؟</div>
+                                <div class="message-time">10:30 صباحاً</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <input type="text" class="chat-input-field" id="chat-input" placeholder="اكتب رسالتك هنا...">
+                        <button class="btn btn-primary" id="send-message">إرسال</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-container">
+                <div class="code-editor">
+                    <div class="code-header">
+                        <div class="code-title">محرر الشفرة</div>
+                        <div class="code-actions">
+                            <button class="code-action" id="run-code" title="تشغيل الشفرة">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="code-action" id="copy-code" title="نسخ الشفرة">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="code-action" id="clear-code" title="مسح الشفرة">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="code-content">
+                        <textarea class="code-textarea" id="code-input" placeholder="// اكتب الشفرة هنا..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="code-output">
+                    <div class="code-header">
+                        <div class="code-title">النتيجة</div>
+                        <div class="code-actions">
+                            <button class="code-action" id="clear-output" title="مسح النتيجة">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="output-content" id="code-output">
+                        // هنا ستظهر نتيجة تنفيذ الشفرة
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projects Page -->
+        <div class="page" id="projects-page">
+            <h2 class="text-primary mb-2">المشاريع</h2>
+            <p class="mb-4">استعرض المشاريع التي تم إنشاؤها باستخدام منصة عبدالعزيز للذكاء الاصطناعي</p>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">نظام حماية متكامل</h3>
+                        <p class="project-description">نظام حماية متكامل لتأمين البيانات والتطبيقات من الهجمات الإلكترونية.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">أمن سيبراني</span>
+                            <span class="project-tag">تشفير</span>
+                        </div>
+                        <button class="btn btn-outline">عرض المشروع</button>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">بوت محادثة ذكي</h3>
+                        <p class="project-description">بوت محادثة ذكي قادر على فهم اللغة العربية والرد على استفسارات المستخدمين.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">NLP</span>
+                            <span class="project-tag">ذكاء اصطناعي</span>
+                        </div>
+                        <button class="btn btn-outline">عرض المشروع</button>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">مولد أكواد HTML/CSS</h3>
+                        <p class="project-description">أداة لتوليد أكواد HTML و CSS بناءً على وصف نصي بسيط.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                        </div>
+                        <button class="btn btn-outline">عرض المشروع</button>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">تطبيق أندرويد للأمن</h3>
+                        <p class="project-description">تطبيق أندرويد لفحص وتأمين الهاتف من التهديدات الأمنية.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Java</span>
+                            <span class="project-tag">Android</span>
+                            <span class="project-tag">أمن</span>
+                        </div>
+                        <button class="btn btn-outline">عرض المشروع</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- About Page -->
+        <div class="page" id="about-page">
+            <div class="about-section">
+                <h2 class="about-title">حول منصة عبدالعزيز للذكاء الاصطناعي</h2>
+                
+                <p class="about-text">
+                    منصة عبدالعزيز للذكاء الاصطناعي هي منصة متكاملة تهدف إلى تسهيل عملية توليد الشفرات البرمجية وتطوير تطبيقات الذكاء الاصطناعي. تم تطوير المنصة بواسطة عبدالعزيز الحمداني لتكون أداة شاملة للمطورين والمهتمين بمجال الذكاء الاصطناعي وأمن المعلومات.
+                </p>
+                
+                <p class="about-text">
+                    تعتمد المنصة على مجموعة من البوتات الذكية التي تعمل معاً لتوفير تجربة متكاملة للمستخدمين. كل بوت له دور محدد ومهام خاصة به، مما يضمن كفاءة عالية في العمل وتنوع في الخدمات المقدمة.
+                </p>
+                
+                <div class="about-features">
+                    <h3 class="mb-2">البوتات الرئيسية في المنصة:</h3>
+                    
+                    <div class="about-feature">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <h4>العميد (المدير العام)</h4>
+                            <p>يدير المنصة بالكامل ويشرف على جميع العمليات، وينشر محتوى ترويجي وتوعوي يومي، بالإضافة إلى نشر أكواد تطوير بوتات حماية كل جمعة.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h4>اللواء (الأمني)</h4>
+                            <p>يحدث نظام الحماية تلقائياً يومياً، وينشر توعية أمنية، ويتعامل مع بيانات المشبوهين من المحقق كونان.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div>
+                            <h4>المحقق كونان</h4>
+                            <p>يراقب المستخدمين لحظة دخولهم، ويتحقق من عنوان IP إذا كان مشفر أو يستخدم VPN غير معتمد، ويضيف المشبوهين إلى "القائمة السوداء".</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div>
+                            <h4>بوت توليد المفاتيح</h4>
+                            <p>يستخدم مكتبات بايثون مجانية لتوليد مفاتيح AI للتعلم، كل مفتاح يحتوي على اسم المطور Abdulaziz.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-feature">
+                        <div class="about-feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div>
+                            <h4>بوت تشفير معلومات المستخدم</h4>
+                            <p>يقوم بتشفير بيانات المستخدمين لضمان خصوصيتهم وأمان معلوماتهم الشخصية.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="developer-info">
+                    <h3 class="developer-title">معلومات المطور</h3>
+                    <div class="developer-details">
+                        <div class="developer-detail">
+                            <i class="fas fa-user"></i>
+                            <span>الاسم: عبدالعزيز الحمداني</span>
+                        </div>
+                        <div class="developer-detail">
+                            <i class="fas fa-envelope"></i>
+                            <span>البريد الإلكتروني: sa6aa6116@gmail.com</span>
+                        </div>
+                        <div class="developer-detail">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub: <a href="https://github.com/openaziz/Abdulaziz-opan.git" target="_blank" class="text-primary">https://github.com/openaziz/Abdulaziz-opan.git</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Abdulaziz-AI</span>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">الشروط والأحكام</a>
+                <a href="#" class="footer-link">سياسة الخصوصية</a>
+                <a href="#" class="footer-link">اتصل بنا</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-login">&times;</span>
+            <h2 class="text-primary mb-3">تسجيل الدخول</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">البريد الإلكتروني</label>
+                    <input type="email" id="login-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password" class="form-label">كلمة المرور</label>
+                    <input type="password" id="login-password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">تسجيل الدخول</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-signup">&times;</span>
+            <h2 class="text-primary mb-3">إنشاء حساب</h2>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name" class="form-label">الاسم</label>
+                    <input type="text" id="signup-name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email" class="form-label">البريد الإلكتروني</label>
+                    <input type="email" id="signup-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password" class="form-label">كلمة المرور</label>
+                    <input type="password" id="signup-password" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm" class="form-label">تأكيد كلمة المرور</label>
+                    <input type="password" id="signup-confirm" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">إنشاء حساب</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00ff00"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00ff00",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const arabic = 'أبتثجحخدذرزسشصضطظعغفقكلمنهوي';
+
+        const alphabet = katakana + latin + nums + arabic;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 30);
+
+        // Typing Effect
+        const typingText = document.getElementById('typed-text');
+        const texts = [
+            "توليد شفرات برمجية...",
+            "إنشاء تطبيقات ذكية...",
+            "حماية البيانات...",
+            "تطوير بوتات ذكية..."
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+
+        function typeText() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                typingText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100;
+            }
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                typingSpeed = 1000;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typingSpeed = 500;
+            }
+            
+            setTimeout(typeText, typingSpeed);
+        }
+
+        // Start typing effect
+        typeText();
+
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = link.getAttribute('data-page');
+                
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                document.getElementById(`${targetPage}-page`).classList.add('active');
+                
+                navLinks.forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                
+                link.classList.add('active');
+            });
+        });
+
+        // Modal Handling
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const closeLogin = document.getElementById('close-login');
+        const closeSignup = document.getElementById('close-signup');
+
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.add('active');
+        });
+
+        signupBtn.addEventListener('click', () => {
+            signupModal.classList.add('active');
+        });
+
+        closeLogin.addEventListener('click', () => {
+            loginModal.classList.remove('active');
+        });
+
+        closeSignup.addEventListener('click', () => {
+            signupModal.classList.remove('active');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('active');
+            }
+            if (e.target === signupModal) {
+                signupModal.classList.remove('active');
+            }
+        });
+
+        // Chat Functionality
+        const chatInput = document.getElementById('chat-input');
+        const sendMessage = document.getElementById('send-message');
+        const chatMessages = document.getElementById('chat-messages');
+        const botItems = document.querySelectorAll('.bot-item');
+
+        let currentBot = 'general';
+
+        botItems.forEach(item => {
+            item.addEventListener('click', () => {
+                botItems.forEach(bot => bot.classList.remove('active'));
+                item.classList.add('active');
+                currentBot = item.getAttribute('data-bot');
+                
+                // Add welcome message from the selected bot
+                const botName = item.querySelector('.bot-name').textContent;
+                const botRole = item.querySelector('.bot-role').textContent;
+                
+                // Clear chat messages
+                chatMessages.innerHTML = '';
+                
+                // Add welcome message
+                addBotMessage(`مرحباً بك! أنا ${botName}، ${botRole}. كيف يمكنني مساعدتك اليوم؟`);
+            });
+        });
+
+        sendMessage.addEventListener('click', sendUserMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        });
+
+        function sendUserMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
+            
+            // Add user message to chat
+            addUserMessage(message);
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Simulate bot response after a short delay
+            setTimeout(() => {
+                let response = '';
+                
+                switch (currentBot) {
+                    case 'general':
+                        response = getBotResponse(message, 'general');
+                        break;
+                    case 'security':
+                        response = getBotResponse(message, 'security');
+                        break;
+                    case 'detective':
+                        response = getBotResponse(message, 'detective');
+                        break;
+                    case 'keys':
+                        response = getBotResponse(message, 'keys');
+                        break;
+                    case 'encryption':
+                        response = getBotResponse(message, 'encryption');
+                        break;
+                    default:
+                        response = 'عذراً، لا يمكنني فهم طلبك. هل يمكنك توضيح ما تريد؟';
+                }
+                
+                addBotMessage(response);
+            }, 1000);
+        }
+
+        function addUserMessage(message) {
+            const now = new Date();
+            const time = now.getHours() + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message user';
+            messageElement.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-text">${message}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addBotMessage(message) {
+            const now = new Date();
+            const time = now.getHours() + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            
+            let botIcon = 'fas fa-robot';
+            switch (currentBot) {
+                case 'security':
+                    botIcon = 'fas fa-shield-alt';
+                    break;
+                case 'detective':
+                    botIcon = 'fas fa-search';
+                    break;
+                case 'keys':
+                    botIcon = 'fas fa-key';
+                    break;
+                case 'encryption':
+                    botIcon = 'fas fa-lock';
+                    break;
+            }
+            
+            messageElement.innerHTML = `
+                <div class="message-avatar">
+                    <i class="${botIcon}"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-text">${message}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(message, botType) {
+            // Simple responses based on bot type and message content
+            const lowerMessage = message.toLowerCase();
+            
+            if (botType === 'general') {
+                if (lowerMessage.includes('مرحبا') || lowerMessage.includes('السلام عليكم')) {
+                    return 'وعليكم السلام! كيف يمكنني مساعدتك اليوم؟';
+                } else if (lowerMessage.includes('كود') || lowerMessage.includes('شفرة')) {
+                    return 'يمكنني مساعدتك في توليد شفرات برمجية. ما هي اللغة التي ترغب في استخدامها؟';
+                } else if (lowerMessage.includes('بوت') || lowerMessage.includes('روبوت')) {
+                    return 'نعم، يمكنني مساعدتك في إنشاء بوتات ذكية. ما هو نوع البوت الذي ترغب في إنشائه؟';
+                } else {
+                    return 'أنا العميد، المدير العام للمنصة. يمكنني مساعدتك في توليد الشفرات البرمجية وإنشاء البوتات وإدارة المشاريع. ما الذي ترغب في معرفته؟';
+                }
+            } else if (botType === 'security') {
+                return 'أنا اللواء، المسؤول عن أمن المنصة. أقوم بتحديث نظام الحماية يومياً ومراقبة أي نشاط مشبوه. هل تحتاج إلى مساعدة في تأمين مشروعك؟';
+            } else if (botType === 'detective') {
+                return 'أنا المحقق كونان، أقوم بمراقبة المستخدمين والتحقق من هوياتهم. لاحظت أنك تستخدم عنوان IP آمن. هل تحتاج إلى مساعدة في التحقق من أمان حسابك؟';
+            } else if (botType === '
