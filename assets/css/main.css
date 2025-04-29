@@ -1,14 +1,47 @@
-
 body {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    min-height: 100vh;
+  background-image: url('../images/bg_template.webp');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  font-family: 'Tahoma', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff;
 }
-/* Page-specific backgrounds */
-body[data-page="assistantcodes"] { background-image: url('../assets/images/logo_icon.png'); }
-body[data-page="chat2"]        { background-image: url('../assets/images/bot_genie2.webp'); }
-body[data-page="chat3"]        { background-image: url('../assets/images/bot_genie5.webp'); }
-body[data-page="codesfile"]    { background-image: url('../assets/images/bg_template.webp'); }
-/* add more pages backgrounds as needed */
+header {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+nav {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+  text-align: center;
+}
+nav a {
+  color: #fff;
+  margin: 0 1rem;
+  text-decoration: none;
+}
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.bot-card {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid red;
+  border-radius: 10px;
+  padding: 1em;
+  margin: 1em 0;
+}
+.bot-card img {
+  width: 100px;
+  border-radius: 8px;
+}
+footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin-top: 2rem;
+}
